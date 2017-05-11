@@ -1,5 +1,7 @@
 # Probot: No Response
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/probot/no-response.svg)](https://greenkeeper.io/)
+
 > a GitHub Integration built with [Probot](https://github.com/probot/probot) that closes Issues where the author hasn't responded to a request for more information.
 
 ## Usage
