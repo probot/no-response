@@ -1,0 +1,25 @@
+{
+  "name": "probot-no-response",
+  "version": "1.0.0",
+  "description": "a GitHub Integration that closes issues where the author hasn't responded to a request for more information",
+  "author": "Lee Dohm",
+  "license": "ISC",
+  "repository": "https://github.com/probot/no-response",
+  "scripts": {
+    "start": "probot run ./index.js",
+    "test": "xo --extend probot"
+  },
+  "engines": {
+    "node": ">= 7.7.0",
+    "npm": ">= 4.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^3.8.4",
+    "probot": "^0.5.0",
+    "probot-visitor": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint-config-probot": "^0.1.0",
+    "xo": "^0.18.2"
+  }
+}
