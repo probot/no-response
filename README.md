@@ -14,10 +14,6 @@ A `.github/no-response.yml` file is required to enable the plugin. The file can 
 
 # Number of days of inactivity before an Issue is closed for lack of response
 daysUntilClose: 14
-# Issues with these labels will never be considered unresponsive
-exemptLabels:
-  - pinned
-  - security
 # Label requiring a response
 responseRequiredLabel: more-information-needed
 # Comment to post when closing an Issue for lack of response. Set to `false` to disable
