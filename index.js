@@ -40,7 +40,7 @@ module.exports = async robot => {
 
     try {
       const data = await github.repos.getContent({owner, repo, path});
-      config = yaml.load(new Buffer(data.content, 'base64').toString()) || {};
+      config = yaml.safeLoad(new Buffer(data.content, 'base64').toString()) || {};
       config.exists = true;
     } catch (err) {
       robot.log.debug(err, 'No configuration file found');
