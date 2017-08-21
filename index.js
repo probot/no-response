@@ -1,9 +1,11 @@
-const visitor = require('probot-visitor');
+const createScheduler = require('probot-scheduler');
 const NoResponse = require('./lib/no-response');
 
 module.exports = async robot => {
   // Visit all repositories to sweep issues with no response
-  const visit = visitor(robot, sweep);
+  scheduler = createScheduler(robot);
+
+  robot.on('schedule.repository', sweep);
 
   // Remove response required label if the author comments
   robot.on('issue_comment', unmark);

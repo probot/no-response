@@ -16,6 +16,7 @@
   "dependencies": {
     "js-yaml": "^3.8.4",
     "probot": "^0.9.1",
+    "probot-scheduler": "^1.0.2",
     "probot-visitor": "^0.1.1"
   },
   "devDependencies": {
