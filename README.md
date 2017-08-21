@@ -1,13 +1,13 @@
 # Probot: No Response
 
-> a GitHub Integration built with [Probot](https://github.com/probot/probot) that closes Issues where the author hasn't responded to a request for more information.
+> a GitHub App built with [Probot](https://github.com/probot/probot) that closes Issues where the author hasn't responded to a request for more information.
 
 ## Usage
 
-1. **[Configure the GitHub Integration](https://github.com/integration/probot-no-response)**
+1. **[Configure the GitHub App](https://github.com/integration/probot-no-response)**
 2. Create `.github/no-response.yml`
 
-A `.github/no-response.yml` file is required to enable the plugin. The file can be empty, or it can override any of these default settings:
+A `.github/no-response.yml` file is required to enable the app. The file can be empty, or it can override any of these default settings:
 
 ```yml
 # Configuration for probot-no-response - https://github.com/probot/no-response
@@ -25,4 +25,4 @@ closeComment: >
   that we can investigate further.
 ```
 
-See [docs/deploy.md](docs/deploy.md) if you would like to run your own instance of this plugin.
+See [docs/deploy.md](docs/deploy.md) if you would like to run your own instance of this app.
