@@ -6,22 +6,21 @@
   "license": "ISC",
   "repository": "https://github.com/probot/no-response",
   "scripts": {
+    "fix": "standard --fix",
     "start": "probot run ./index.js",
-    "test": "xo --extend probot"
+    "test": "standard"
   },
   "engines": {
     "node": ">= 7.7.0",
     "npm": ">= 4.0.0"
   },
   "dependencies": {
-    "js-yaml": "^3.8.4",
     "probot": "^0.9.1",
-    "probot-scheduler": "^1.0.2",
-    "probot-visitor": "^0.1.1"
+    "probot-scheduler": "^1.0.2"
   },
   "devDependencies": {
     "eslint-config-probot": "^0.1.0",
     "localtunnel": "^1.8.3",
-    "xo": "^0.18.2"
+    "standard": "^10.0.3"
   }
 }
