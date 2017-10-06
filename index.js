@@ -3,15 +3,16 @@ const NoResponse = require('./lib/no-response')
 
 module.exports = async robot => {
   // Visit all repositories to sweep issues with no response
-  scheduler = createScheduler(robot)
+  createScheduler(robot)
 
   robot.on('schedule.repository', sweep)
 
   // Remove response required label if the author comments
   robot.on('issue_comment', unmark)
 
-  async function sweep (installation, repository) {
+  async function sweep (context) {
     const config = await context.config(`no-response.yml`)
+
     if (config) {
       const noResponse = new NoResponse(context.github, config)
       return noResponse.sweep()
