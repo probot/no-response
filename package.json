@@ -6,8 +6,9 @@
   "license": "ISC",
   "repository": "https://github.com/probot/no-response",
   "scripts": {
+    "fix": "standard --fix",
     "start": "probot run ./index.js",
-    "test": "xo --extend probot"
+    "test": "standard"
   },
   "engines": {
     "node": ">= 7.7.0",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "eslint-config-probot": "^0.1.0",
     "localtunnel": "^1.8.3",
+    "standard": "^10.0.3",
     "xo": "^0.18.2"
   }
 }
