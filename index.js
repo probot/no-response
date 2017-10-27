@@ -14,7 +14,7 @@ module.exports = async robot => {
     const config = await context.config(`no-response.yml`)
 
     if (config) {
-      const configWithDefaults = Object.assign({}, require('./defaults'), config)
+      const configWithDefaults = Object.assign({}, require('./lib/defaults'), config)
       const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
       return noResponse.sweep()
     }
@@ -24,7 +24,7 @@ module.exports = async robot => {
     const config = await context.config('no-response.yml')
 
     if (config) {
-      const configWithDefaults = Object.assign({}, require('./defaults'), config)
+      const configWithDefaults = Object.assign({}, require('./lib/defaults'), config)
       const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
       return noResponse.unmark(context.issue())
     }
