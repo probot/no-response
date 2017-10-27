@@ -8,7 +8,7 @@
   "scripts": {
     "fix": "standard --fix",
     "start": "probot run ./index.js",
-    "test": "standard"
+    "test": "mocha && standard"
   },
   "engines": {
     "node": ">= 7.7.0",
@@ -20,7 +20,14 @@
   },
   "devDependencies": {
     "eslint-config-probot": "^0.1.0",
+    "expect": "^1.20.2",
     "localtunnel": "^1.8.3",
+    "mocha": "^4.0.1",
     "standard": "^10.0.3"
+  },
+  "standard": {
+    "env": [
+        "mocha"
+    ]
   }
 }
