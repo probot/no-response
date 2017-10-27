@@ -14,23 +14,19 @@ module.exports = async robot => {
     const config = await context.config(`no-response.yml`)
 
     if (config) {
-      const noResponse = new NoResponse(context.github, config)
+      const configWithDefaults = Object.assign({}, require('./defaults'), config)
+      const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
       return noResponse.sweep()
     }
   }
 
   async function unmark (context) {
-    if (!context.isBot) {
-      const issue = context.payload.issue
-      const comment = context.payload.comment
+    const config = await context.config('no-response.yml')
 
-      const config = await context.config(`no-response.yml`)
-      if (config) {
-        const noResponse = new NoResponse(context.github, config)
-        if (noResponse.hasResponseRequiredLabel(issue) && issue.user.login === comment.user.login) {
-          noResponse.unmark(issue)
-        }
-      }
+    if (config) {
+      const configWithDefaults = Object.assign({}, require('./defaults'), config)
+      const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
+      return noResponse.unmark(context.issue())
     }
   }
 }
