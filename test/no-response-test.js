@@ -34,9 +34,8 @@ describe('NoResponse', function () {
           edit: expect.createSpy().andReturn(Promise.resolve()),
           getLabel: expect.createSpy().andReturn(Promise.resolve())
         },
-        paginate: expect.createSpy().andReturn(Promise.resolve([])),
         search: {
-          issues: expect.createSpy()
+          issues: expect.createSpy().andReturn(Promise.resolve({data: []}))
         }
       }
 
