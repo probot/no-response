@@ -15,7 +15,7 @@ module.exports = async robot => {
 
     if (config) {
       const configWithDefaults = Object.assign({}, require('./lib/defaults'), config)
-      const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
+      const noResponse = new NoResponse(context, configWithDefaults, robot.log)
       return noResponse.sweep()
     }
   }
@@ -25,7 +25,7 @@ module.exports = async robot => {
 
     if (config) {
       const configWithDefaults = Object.assign({}, require('./lib/defaults'), config)
-      const noResponse = new NoResponse(context, configWithDefaults, robot.logger)
+      const noResponse = new NoResponse(context, configWithDefaults, robot.log)
       return noResponse.unmark(context.issue())
     }
   }
