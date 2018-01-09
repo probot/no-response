@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "probot": "^3.0.2",
-    "probot-scheduler": "^1.0.2"
+    "probot-scheduler": "^1.0.2",
+    "scramjet": "^4.0.1"
   },
   "devDependencies": {
     "eslint-config-probot": "^0.1.0",
@@ -27,7 +28,7 @@
   },
   "standard": {
     "env": [
-        "mocha"
+      "mocha"
     ]
   }
 }
