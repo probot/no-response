@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "probot": "^7.0.0",
-    "probot-scheduler": "^1.0.2",
+    "probot-scheduler": "^1.2.0",
     "scramjet": "^4.0.1"
   },
   "devDependencies": {
