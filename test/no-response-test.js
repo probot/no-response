@@ -179,4 +179,158 @@ describe('NoResponse', function () {
       })
     })
   })
+
+  describe('unmark', function () {
+    let issueProperties
+    let noResponse
+
+    beforeEach(function () {
+      issueProperties = {
+        state: 'open',
+        user: {
+          login: 'some-issue-author'
+        },
+        labels: [
+          { name: 'more-information-needed' }
+        ]
+      }
+
+      github = {
+        issues: {
+          edit: expect.createSpy(),
+          get: () => {
+            return Promise.resolve({
+              data: {
+                state: issueProperties.state,
+                user: issueProperties.user
+              }
+            })
+          },
+          getIssueLabels: () => {
+            return Promise.resolve({
+              data: issueProperties.labels
+            })
+          },
+          removeLabel: expect.createSpy()
+        }
+      }
+
+      context = {
+        github,
+        payload: {
+          issue: {
+            number: 1234,
+            owner: repository.owner,
+            repo: repository.repo
+          },
+          comment: {
+            user: {}
+          }
+        }
+      }
+    })
+
+    describe('when perform is set to false', function () {
+      beforeEach(function () {
+        config.perform = false
+        noResponse = new NoResponse(context, config, logger)
+      })
+
+      describe('when the issue has the response required label and the commenter is the issue author', function () {
+        beforeEach(function () {
+          context.payload.comment.user.login = 'some-issue-author'
+        })
+
+        it('logs that this is a dry run', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(logger.info).toHaveBeenCalled()
+          expect(logger.info.calls[0].arguments[0]).toMatch(/dry-run/)
+        })
+
+        it('does not remove the label', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(github.issues.removeLabel).toNotHaveBeenCalled()
+        })
+      })
+    })
+
+    describe('when perform is set to true', function () {
+      beforeEach(function () {
+        config.perform = true
+        noResponse = new NoResponse(context, config, logger)
+      })
+
+      describe('when the issue has the response required label and the commenter is the issue author', function () {
+        beforeEach(function () {
+          context.payload.comment.user.login = 'some-issue-author'
+        })
+
+        it('logs that the label is being removed', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(logger.info).toHaveBeenCalled()
+          expect(logger.info.calls[0].arguments[0]).toMatch(/is being unmarked/)
+        })
+
+        it('removes the label', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(github.issues.removeLabel).toHaveBeenCalled()
+          const args = github.issues.removeLabel.calls[0].arguments[0]
+          expect(args.owner).toBe('probot')
+          expect(args.repo).toBe('testing-things')
+          expect(args.number).toBe(1234)
+          expect(args.name).toBe('more-information-needed')
+        })
+
+        describe('when the issue is closed', function () {
+          it('reopens the issue', async function () {
+            issueProperties.state = 'closed'
+
+            await noResponse.unmark(context.payload.issue)
+            expect(github.issues.edit).toHaveBeenCalled()
+            const args = github.issues.edit.calls[0].arguments[0]
+            expect(args.owner).toBe('probot')
+            expect(args.repo).toBe('testing-things')
+            expect(args.number).toBe(1234)
+            expect(args.state).toBe('open')
+          })
+        })
+
+        describe('when the issue is open', function () {
+          it('leaves the issue open', async function () {
+            issueProperties.state = 'open'
+
+            await noResponse.unmark(context.payload.issue)
+            expect(github.issues.edit).toNotHaveBeenCalled()
+          })
+        })
+      })
+
+      describe('when the issue has the response required label and the commenter is NOT the issue author', function () {
+        beforeEach(function () {
+          context.payload.comment.user.login = 'some-issue-commenter'
+        })
+
+        it('does not alter the issue', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(github.issues.edit).toNotHaveBeenCalled()
+          expect(github.issues.removeLabel).toNotHaveBeenCalled()
+        })
+      })
+
+      describe('when the issue does NOT have the response required label and the commenter is the issue author', function () {
+        beforeEach(function () {
+          issueProperties.labels = [
+            { name: 'some-other-label' }
+          ]
+          context.payload.comment.user.login = 'some-issue-author'
+        })
+
+        it('does not alter the issue', async function () {
+          await noResponse.unmark(context.payload.issue)
+          expect(github.issues.edit).toNotHaveBeenCalled()
+          expect(github.issues.removeLabel).toNotHaveBeenCalled()
+        })
+      })
+    })
+  })
 })
