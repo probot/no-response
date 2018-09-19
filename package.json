@@ -11,8 +11,7 @@
     "test": "mocha && standard"
   },
   "engines": {
-    "node": "^7.7",
-    "npm": "^4.0"
+    "node": ">= 8.3.0"
   },
   "dependencies": {
     "probot": "^3.0.2",
