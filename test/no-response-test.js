@@ -187,6 +187,7 @@ describe('NoResponse', function () {
     beforeEach(function () {
       issueProperties = {
         state: 'open',
+        closed_by: null,
         user: {
           login: 'some-issue-author'
         },
@@ -202,7 +203,8 @@ describe('NoResponse', function () {
             return Promise.resolve({
               data: {
                 state: issueProperties.state,
-                user: issueProperties.user
+                user: issueProperties.user,
+                closed_by: issueProperties.closed_by
               }
             })
           },
@@ -281,9 +283,10 @@ describe('NoResponse', function () {
           expect(args.name).toBe('more-information-needed')
         })
 
-        describe('when the issue is closed', function () {
+        describe('when the issue is closed by someone other than the issue author', function () {
           it('reopens the issue', async function () {
             issueProperties.state = 'closed'
+            issueProperties.closed_by = { login: 'some-other-user' }
 
             await noResponse.unmark(context.payload.issue)
             expect(github.issues.edit).toHaveBeenCalled()
@@ -292,6 +295,16 @@ describe('NoResponse', function () {
             expect(args.repo).toBe('testing-things')
             expect(args.number).toBe(1234)
             expect(args.state).toBe('open')
+          })
+        })
+
+        describe('when the issue is closed by the issue author', function () {
+          it('leaves the issue closed', async function () {
+            issueProperties.state = 'closed'
+            issueProperties.closed_by = { login: 'some-issue-author' }
+
+            await noResponse.unmark(context.payload.issue)
+            expect(github.issues.edit).toNotHaveBeenCalled()
           })
         })
 
