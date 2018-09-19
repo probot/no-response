@@ -7,6 +7,7 @@
   "repository": "https://github.com/probot/no-response",
   "scripts": {
     "fix": "standard --fix",
+    "dev": "nodemon",
     "start": "probot run ./index.js",
     "test": "mocha && standard"
   },
@@ -23,11 +24,20 @@
     "expect": "^1.20.2",
     "localtunnel": "^1.8.3",
     "mocha": "^4.0.1",
+    "nodemon": "^1.17.2",
+    "smee-client": "^1.0.2",
     "standard": "^10.0.3"
   },
   "standard": {
     "env": [
       "mocha"
+    ]
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
     ]
   }
 }
