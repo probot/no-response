@@ -14,7 +14,7 @@
     "node": ">= 8.3.0"
   },
   "dependencies": {
-    "probot": "^3.0.2",
+    "probot": "^7.0.0",
     "probot-scheduler": "^1.0.2",
     "scramjet": "^4.0.1"
   },
