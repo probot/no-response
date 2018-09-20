@@ -29,7 +29,7 @@ When an `issue_comment` event is received, if all of the following are true:
 It will:
 
 1. Remove the `responseRequiredLabel`
-1. Reopen the issue if it was closed
+1. Reopen the issue if it was closed by someone other than the original author of the issue
 
 ## Usage
 
