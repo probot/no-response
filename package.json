@@ -7,16 +7,16 @@
   "repository": "https://github.com/probot/no-response",
   "scripts": {
     "fix": "standard --fix",
+    "dev": "nodemon",
     "start": "probot run ./index.js",
     "test": "mocha && standard"
   },
   "engines": {
-    "node": "^7.7",
-    "npm": "^4.0"
+    "node": ">= 8.3.0"
   },
   "dependencies": {
-    "probot": "^3.0.2",
-    "probot-scheduler": "^1.0.2",
+    "probot": "^7.0.0",
+    "probot-scheduler": "^1.2.0",
     "scramjet": "^4.0.1"
   },
   "devDependencies": {
@@ -24,11 +24,20 @@
     "expect": "^1.20.2",
     "localtunnel": "^1.8.3",
     "mocha": "^4.0.1",
+    "nodemon": "^1.17.2",
+    "smee-client": "^1.0.2",
     "standard": "^10.0.3"
   },
   "standard": {
     "env": [
       "mocha"
+    ]
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
     ]
   }
 }
