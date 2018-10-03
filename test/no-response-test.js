@@ -158,24 +158,38 @@ describe('NoResponse', function () {
     })
 
     describe('when perform is set to true and a close comment is included', function () {
-      beforeEach(async function () {
+      let noResponse
+
+      beforeEach(function () {
         noResponse = new NoResponse(context, {closeComment: 'foo', perform: true}, logger)
-        await noResponse.close(context.repo({number: 1234}))
       })
 
-      it('logs that the issue is being closed', function () {
+      it('logs that the issue is being closed', async function () {
+        await noResponse.close(context.repo({number: 1234}))
         expect(logger.info).toHaveBeenCalled()
         expect(logger.info.calls[0].arguments[0]).toMatch(/is being closed/)
       })
 
-      it('closes the issue', function () {
+      it('posts a comment', async function () {
+        await noResponse.close(context.repo({number: 1234}))
+        expect(github.issues.createComment).toHaveBeenCalled()
+        expect(github.issues.createComment.calls[0].arguments[0]).toMatch({body: 'foo'})
+      })
+
+      it('closes the issue if the comment posted successfully', async function () {
+        await noResponse.close(context.repo({number: 1234}))
         expect(github.issues.edit).toHaveBeenCalled()
         expect(github.issues.edit.calls[0].arguments[0]).toMatch({state: 'closed'})
       })
 
-      it('posts a comment', function () {
-        expect(github.issues.createComment).toHaveBeenCalled()
-        expect(github.issues.createComment.calls[0].arguments[0]).toMatch({body: 'foo'})
+      it('does not close the issue if posting the comment failed', async function () {
+        github.issues.createComment = expect.createSpy().andReturn(Promise.reject(new Error()))
+
+        try {
+          await noResponse.close(context.repo({number: 1234}))
+        } catch (e) {}
+
+        expect(github.issues.edit).toNotHaveBeenCalled()
       })
     })
   })
