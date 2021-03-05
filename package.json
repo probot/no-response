@@ -4,7 +4,7 @@
   "description": "a GitHub Integration that closes issues where the author hasn't responded to a request for more information",
   "author": "Lee Dohm",
   "license": "ISC",
-  "repository": "https://github.com/probot/no-response",
+  "repository": "github:probot/no-response",
   "scripts": {
     "fix": "standard --fix",
     "dev": "nodemon",
