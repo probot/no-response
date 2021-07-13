@@ -1,3 +1,7 @@
+# ⚠️ We no longer recommend using this app
+
+Use the action instead: https://github.com/lee-dohm/no-response
+
 # Probot: No Response
 
 > a GitHub App built with [Probot](https://github.com/probot/probot) that closes Issues where the author hasn't responded to a request for more information.
